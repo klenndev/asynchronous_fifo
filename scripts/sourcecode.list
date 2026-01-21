@@ -1,0 +1,11 @@
+
+# Design
+../rtl/wrptr_control.sv
+../rtl/rdptr_control.sv
+../rtl/async_fifo.sv
+../rtl/sync_2stage.sv
+../libraries/custom_sram_1r1w_32_256_freepdk45/custom_sram_1r1w_32_256_freepdk45.v
+
+# TB
+../tb/tb_pkg.sv
+../tb/top.sv
