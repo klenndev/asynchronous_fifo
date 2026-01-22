@@ -35,7 +35,7 @@ This repository contains a synthesizable asynchronous FIFO implementation design
 - Pointers are synchronized using two-stage flip-flop synchronizers.
 - Full and empty flags are generated using synchronized Gray-coded pointers.
 ## Submodules
-- `fifo_mem` – Dual-port FIFO memory
+- `custom_sram_1r1w_32_256_freepdk45` – Dual-port FIFO memory. Compiled using OpenRAM.
 - `sync_2stage` – Two-flip-flop CDC synchronizer
 - `wptr_control` – Write pointer and full-flag logic
 - `rptr_control` – Read pointer and empty-flag logic
