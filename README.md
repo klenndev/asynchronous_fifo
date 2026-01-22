@@ -1,9 +1,9 @@
 
-# Asynchronous FIFO (Async FIFO)
+# Asynchronous FIFO
 
 ## Overview
 This repository contains a synthesizable asynchronous FIFO implementation designed for safe data transfer between independent clock domains. The design follows CDC techniques using Gray-coded pointers and multi-stage synchronizers to ensure reliable full and empty detection across clock boundaries.
-## Block Diagram
+## Typical Asynchronous FIFO Block Diagram
 ![Block_diagram](./doc/async_fifo_typ_block_diagram.png)
 ## Interface
 **Key signals**
@@ -34,8 +34,10 @@ This repository contains a synthesizable asynchronous FIFO implementation design
 - Read and write pointers are converted to Gray code before crossing clock domains.
 - Pointers are synchronized using two-stage flip-flop synchronizers.
 - Full and empty flags are generated using synchronized Gray-coded pointers.
-### Submodules
+## Submodules
 - `fifo_mem` – Dual-port FIFO memory
 - `sync_2stage` – Two-flip-flop CDC synchronizer
 - `wptr_control` – Write pointer and full-flag logic
 - `rptr_control` – Read pointer and empty-flag logic
+## Synthesis
+- WIP
