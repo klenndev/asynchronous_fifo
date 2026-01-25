@@ -1,14 +1,22 @@
-
 # Asynchronous FIFO
 
 ## Overview
 This repository contains a synthesizable asynchronous FIFO implementation designed for safe data transfer between independent clock domains. The design follows CDC techniques using Gray-coded pointers and multi-stage synchronizers to ensure reliable full and empty detection across clock boundaries.
 ## Typical Asynchronous FIFO Block Diagram
 ![Block_diagram](./doc/async_fifo_typ_block_diagram.png)
-## Interface
-**Key signals**
-- **Write domain**: `wclk`, `wrst_n`, `wen`, `wdata`, `wfull`
-- **Read domain**: `rclk`, `rrst_n`, `ren`, `rdata`, `rempty`
+## Ports
+| Signal   | Direction | Width     | Description                                      |
+|----------|-----------|-----------|--------------------------------------------------|
+| wclk     | I         | 1         | Write-domain clock.                              |
+| wrst_n   | I         | 1         | Asynchronous reset for write domain (active low).|
+| wren     | I         | 1         | Write enable to FIFO.                            |
+| wdata    | I         | [D-1:0]   | Data to be written into the FIFO.                |
+| rclk     | I         | 1         | Read-domain clock.                               |
+| rrst_n   | I         | 1         | Asynchronous reset for read domain (active low). |
+| rden     | I         | 1         | Read enable from FIFO.                           |
+| rdata    | O         | [D-1:0]   | Data read from the FIFO.                         |
+| wfull    | O         | 1         | Indicates FIFO is full (write side).             |
+| rempty   | O         | 1         | Indicates FIFO is empty (read side).             |
 ## Clocks / Resets
 - Independent write (`wclk`) and read (`rclk`) clocks.
 - Active-low asynchronous resets (`wrst_n`, `rrst_n`) per clock domain.
@@ -35,7 +43,7 @@ This repository contains a synthesizable asynchronous FIFO implementation design
 - Full and empty flags are generated using synchronized Gray-coded pointers.
 ## Submodules
 - `custom_sram_1r1w_32_256_freepdk45` – Dual-port FIFO memory. Compiled using OpenRAM.
-- `sync_2stage` – Two-flip-flop CDC synchronizer
+- `sync_2stage` – Two-stage flip-flop CDC synchronizer
 - `wptr_control` – Write pointer and full-flag logic
 - `rptr_control` – Read pointer and empty-flag logic
 ## Synthesis
@@ -56,4 +64,5 @@ Timing was achieved across all process corners. The worst-case slack was observe
 | Slow    | 953                      | 0        | 40,445    | 205            |
 | Typical | 1,356                    | 0        | 40,445    | 205            |
 | Fast    | 1,516                    | 0        | 40,445    | 205            |
+
 The design met the timing requirements set with zero total negative slack, achieving a cell area of 40,445.
