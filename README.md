@@ -12,7 +12,6 @@ This repository contains a synthesizable asynchronous FIFO implementation design
 ## Clocks / Resets
 - Independent write (`wclk`) and read (`rclk`) clocks.
 - Active-low asynchronous resets (`wrst_n`, `rrst_n`) per clock domain.
-- Local resets are synchronized internally to avoid reset-related CDC issues.
 ## Implementation
 ### Functional Description
 #### Write Interface
@@ -40,4 +39,21 @@ This repository contains a synthesizable asynchronous FIFO implementation design
 - `wptr_control` – Write pointer and full-flag logic
 - `rptr_control` – Read pointer and empty-flag logic
 ## Synthesis
-- WIP
+The asynchronous FIFO was synthesized using a multi-corner setup (SS, TT, FF) with the FreePDK45 / NanGate 45nm open cell library. 
+
+The FIFO memory is implemented using a 1R1W SRAM macro generated with the OpenRAM tool. The write clock (`wclk`) was constrained to 300 MHz (3.33 ns), while the read clock (`rclk`) was constrained to 175 MHz (5.71 ns).
+
+Timing was achieved across all process corners. The worst-case slack was observed at the SS corner, with a value of 953ps, providing margin for post-synthesis processes.
+### Process Corners
+| Corner  | Process | Voltage | Temperature |
+| ------- | ------- | ------- | ----------- |
+| Slow    | SS      | 0.95V   | 125°C       |
+| Typical | TT      | 1.1V    | 25°C        |
+| Fast    | FF      | 1.25    | 0°C         |
+### Timing and Area Summary
+| Corner  | Critical Path Slack (ps) | TNS (ps) | Cell Area | Leaf Instances |
+| ------- | ------------------------ | -------- | --------- | -------------- |
+| Slow    | 953                      | 0        | 40,445    | 205            |
+| Typical | 1,356                    | 0        | 40,445    | 205            |
+| Fast    | 1,516                    | 0        | 40,445    | 205            |
+The design met the timing requirements set with zero total negative slack, achieving a cell area of 40,445.
